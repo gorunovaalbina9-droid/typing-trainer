@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+*.log
+
+build/
+dist/
+TypingTrainer.spec
+TypingTrainer.zip
+
+.venv/
+venv/
+
