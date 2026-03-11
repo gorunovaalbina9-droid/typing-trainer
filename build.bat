@@ -10,7 +10,7 @@ if errorlevel 1 (
     exit /b 1
 )
 
-python -m PyInstaller --noconfirm --name "TypingTrainer" --onefile --windowed main.py
+python -m PyInstaller --noconfirm --name "TypingTrainer" --onefile --windowed --hidden-import=PIL --hidden-import=matplotlib --collect-data matplotlib main.py
 
 if exist "dist\TypingTrainer.exe" (
     echo.

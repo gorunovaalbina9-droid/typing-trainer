@@ -10,3 +10,6 @@ TypingTrainer.zip
 .venv/
 venv/
 
+progress.json
+settings.json
+
