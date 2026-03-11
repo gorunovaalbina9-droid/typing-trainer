@@ -12,4 +12,5 @@ venv/
 
 progress.json
 settings.json
+.installed
 
