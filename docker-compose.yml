@@ -1,0 +1,25 @@
+# Тренажёр слепой печати — Docker Compose
+#
+# Сборка:  docker-compose build
+# Запуск:  docker-compose up
+#
+# По умолчанию используется Xvfb (виртуальный дисплей) —
+# приложение запускается, но окно не отображается.
+# Подходит для тестов и CI.
+#
+# Для отображения GUI на Linux с X11:
+#   xhost +local:docker
+#   docker run --rm -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --entrypoint python typing-trainer:latest main.py
+
+services:
+  typing-trainer:
+    build: .
+    image: typing-trainer:latest
+    container_name: typing-trainer
+    volumes:
+      - typing-data:/app
+    stdin_open: true
+    tty: true
+
+volumes:
+  typing-data:

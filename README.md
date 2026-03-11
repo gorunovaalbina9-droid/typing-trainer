@@ -82,6 +82,34 @@ distribute.bat
 
 Результат: `Output/TypingTrainerSetup.exe` — установщик с ярлыками в меню Пуск и на рабочем столе.
 
+### Docker
+
+**Сборка образа:**
+```bash
+docker build -t typing-trainer .
+```
+
+**Запуск (с Xvfb, для тестов):**
+```bash
+docker run --rm typing-trainer
+```
+
+Или через Compose:
+```bash
+docker-compose build
+docker-compose up
+```
+
+**Запуск с отображением GUI на Linux (X11):**
+```bash
+xhost +local:docker
+docker run --rm -e DISPLAY=$DISPLAY \
+  -v /tmp/.X11-unix:/tmp/.X11-unix \
+  --entrypoint python typing-trainer main.py
+```
+
+> На Windows для GUI удобнее использовать `TypingTrainer.exe` или `run.bat`.
+
 ---
 
 ## 📋 Требования
@@ -100,4 +128,7 @@ distribute.bat
 | `run.bat` | Быстрый запуск для пользователей с Python |
 | `build.bat` | Сборка exe |
 | `distribute.bat` | Сборка exe + архив для раздачи |
+| `Dockerfile` | Сборка Docker-образа |
+| `docker-compose.yml` | Запуск через Docker Compose |
+| `.dockerignore` | Исключения для контекста сборки Docker |
 | `ИНСТРУКЦИЯ.txt` | Краткая инструкция (входит в zip) |

@@ -1,19 +1,28 @@
+# Тренажёр слепой печати — образ для запуска в Docker
+# Требуется доступ к дисплею (X11) для GUI
+
 FROM python:3.11-slim
+
+# Tkinter требует tk и tcl
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    tk \
+    tcl \
+    xvfb \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-# Устанавливаем зависимости для tkinter (GUI)
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    python3-tk tk && \
-    rm -rf /var/lib/apt/lists/*
+COPY requirements.txt .
 
-# Копируем файлы приложения
-COPY requirements.txt ./requirements.txt
-COPY main.py ./main.py
+# PyInstaller не нужен в контейнере для запуска
+RUN pip install --no-cache-dir \
+    customtkinter>=5.2.0 \
+    Pillow>=10.0.0 \
+    matplotlib>=3.7.0
 
-# Ставим python-зависимости
-RUN pip install --no-cache-dir -r requirements.txt
+COPY main.py assets.py ./
 
-# По умолчанию запускаем тренажёр
-CMD ["python", "main.py"]
+# Папка assets создастся при первом запуске
+RUN mkdir -p assets
 
+ENTRYPOINT ["xvfb-run", "-a", "python", "main.py"]
